@@ -1,0 +1,16 @@
+{
+  "name": "twolabs",
+  "version": "0.2.0",
+  "description": "Investigue agentes, ligações, conhecimento e ferramentas da TwoLabs pelo MCP; as skills de escrita pedem chave própria e confirmação antes de publicar.",
+  "author": { "name": "TwoLabs" },
+  "homepage": "https://github.com/nevicobsb/twolabs-claude-plugin",
+  "repository": "https://github.com/nevicobsb/twolabs-claude-plugin",
+  "skills": "./skills/",
+  "mcpServers": "./codex.mcp.json",
+  "interface": {
+    "displayName": "TwoLabs",
+    "shortDescription": "Investigar e, com chave de escrita, editar agentes, fluxos, ferramentas e conhecimento da TwoLabs pelo MCP.",
+    "developerName": "TwoLabs",
+    "category": "Productivity"
+  }
+}

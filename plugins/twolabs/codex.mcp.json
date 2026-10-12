@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "twolabs": {
+      "type": "streamable-http",
+      "url": "https://api-twolabs.twolabs.app/mcp",
+      "env_http_headers": {
+        "X-API-Key": "TWOLABS_API_KEY"
+      }
+    }
+  }
+}

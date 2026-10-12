@@ -1,0 +1,22 @@
+{
+  "name": "twolabs",
+  "displayName": "TwoLabs",
+  "version": "0.2.0",
+  "description": "Investigue agentes, ligações, conhecimento e ferramentas da TwoLabs pelo MCP; as skills de escrita pedem chave própria e confirmação antes de publicar.",
+  "author": { "name": "TwoLabs" },
+  "homepage": "https://github.com/nevicobsb/twolabs-claude-plugin",
+  "repository": "https://github.com/nevicobsb/twolabs-claude-plugin",
+  "skills": "./skills/",
+  "mcpServers": "./cursor.mcp.json",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "TWOLABS_API_KEY": {
+        "type": "string",
+        "title": "API Key com canal MCP",
+        "description": "Chave criada em Developers > API Keys com o modelo Investigar com IA (começa com twr_)."
+      }
+    },
+    "required": ["TWOLABS_API_KEY"]
+  }
+}

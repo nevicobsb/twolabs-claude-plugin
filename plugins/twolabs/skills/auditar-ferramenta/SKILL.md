@@ -15,6 +15,11 @@ allowed-tools:
 
 Em TODA chamada, preencha `contexto` com o objetivo numa frase, sem dados pessoais.
 
+## Chave
+
+Usa `tools.read` (ferramentas, servidores MCP e execuções) e `agents.read` (`listar_agentes`), ambas no modelo
+**Investigar com IA**.
+
 ## Passos
 
 1. Localizar: `listar_ferramentas` (filtre por `agent_id` se souber o agente) ou `listar_servidores_mcp`.

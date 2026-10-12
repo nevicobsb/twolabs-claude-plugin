@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "twolabs": {
+      "url": "https://api-twolabs.twolabs.app/mcp",
+      "headers": {
+        "X-API-Key": "${TWOLABS_API_KEY}"
+      }
+    }
+  }
+}

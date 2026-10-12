@@ -1,7 +1,7 @@
 {
   "name": "twolabs",
-  "version": "0.1.1",
-  "description": "Investigue agentes, ligações, conhecimento e ferramentas da TwoLabs pelo MCP; as skills só usam ferramentas de leitura.",
+  "version": "0.2.0",
+  "description": "MCP da TwoLabs e skills para investigar e, com chave de escrita, editar agentes, fluxos, ferramentas, conhecimento e QA; a escrita pede chave própria e confirmação antes de publicar.",
   "author": {
     "name": "TwoLabs"
   },

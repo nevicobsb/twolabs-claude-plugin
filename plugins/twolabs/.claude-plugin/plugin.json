@@ -1,0 +1,29 @@
+{
+  "name": "twolabs",
+  "version": "0.1.0",
+  "description": "Investigue agentes, ligações, conhecimento e ferramentas da TwoLabs pelo MCP; as skills só usam ferramentas de leitura.",
+  "author": { "name": "TwoLabs" },
+  "userConfig": {
+    "server_url": {
+      "type": "string",
+      "title": "Endereço do MCP da TwoLabs",
+      "description": "URL do servidor MCP. Produção: https://api-twolabs.twolabs.app/mcp. Instalação própria: https://SEU_HOST/mcp.",
+      "default": "https://api-twolabs.twolabs.app/mcp",
+      "required": true
+    },
+    "api_key": {
+      "type": "string",
+      "title": "API Key com canal MCP",
+      "description": "Chave criada em Developers > API Keys com o modelo Investigar com IA (começa com twr_). Fica no cofre de credenciais do sistema.",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "mcpServers": {
+    "twolabs": {
+      "type": "http",
+      "url": "${user_config.server_url}",
+      "headers": { "X-API-Key": "${user_config.api_key}" }
+    }
+  }
+}

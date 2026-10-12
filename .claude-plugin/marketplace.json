@@ -1,6 +1,8 @@
 {
   "name": "twolabs",
-  "owner": { "name": "TwoLabs" },
+  "owner": {
+    "name": "TwoLabs"
+  },
   "metadata": {
     "description": "Plugins da TwoLabs para o Claude Code."
   },
@@ -9,7 +11,7 @@
       "name": "twolabs",
       "source": "./plugins/twolabs",
       "description": "MCP da TwoLabs e skills (só de leitura) para investigar ligações, agentes, ferramentas e versões.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     }
   ]
 }

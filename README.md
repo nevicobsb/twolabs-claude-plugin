@@ -11,12 +11,17 @@ Numa sessão interativa do Claude Code:
 /plugin install twolabs@twolabs
 ```
 
-Na instalação o Claude Code pede:
+Na instalação o Claude Code pede só a **API Key com canal MCP**: crie em **Developers › API Keys** com o modelo **Investigar com IA** (a chave começa com `twr_`). Ela fica no cofre de credenciais do sistema, nunca neste repositório.
 
-- **Endereço do MCP:** aceite o padrão `https://api-twolabs.twolabs.app/mcp` (ou use `https://SEU_HOST/mcp` numa instalação própria).
-- **API Key com canal MCP:** crie em **Developers › API Keys** com o modelo **Investigar com IA** (a chave começa com `twr_`). Ela fica no cofre de credenciais do sistema, nunca neste repositório.
+O plugin aponta para a produção (`https://api-twolabs.twolabs.app/mcp`). Numa instalação própria, use no lugar dele:
+
+```text
+claude mcp add --transport http twolabs https://SEU_HOST/mcp --header "X-API-Key: SUA_CHAVE"
+```
 
 Depois, `/mcp` deve listar `plugin:twolabs:twolabs` conectado.
+
+Para receber versões novas: `/plugin marketplace update twolabs`.
 
 ## Skills
 

@@ -21,7 +21,8 @@ usuário.
 ## Passos
 
 1. Ler o fluxo INTEIRO. `ler_fluxo` é paginado como uma sequência plana de itens, na ordem `config.nodes`,
-   `config.edges`, `workflow_config.nodes`, `workflow_config.edges`. Chame com `inicio` 0 e siga
+   `config.edges`, `workflow_config.nodes`, `workflow_config.edges`. Chame SEMPRE com `inicio` 0 (sem `inicio`,
+   fluxo grande volta só `truncado`, sem nada para gravar) e siga
    `proximo_inicio` (passando-o como `inicio`) até vir `null`; `limite` (1 a 500) só reduz a página. Junte as
    páginas na ordem: estenda as listas `nodes` e `edges` e una os dicts de `config` e de `workflow_config`.
    As demais chaves de cada grafo (chaves extras) formam um item virtual na posição 0 e vêm só na página 0,
@@ -42,7 +43,12 @@ usuário.
    - "O fluxo não foi gravado: o rascunho tem itens grandes demais para ler_fluxo entregar...": o envio omite
      ou altera um item que o MCP não entrega. Não tente contornar: esse item só se edita pela tela da TwoLabs.
    - "O fluxo não foi gravado: ...": defeito estrutural (nó sem saída, aresta para nó inexistente...).
-     Corrija o que o texto aponta e regrave.
+     Corrija o que o texto aponta e regrave. Se o texto diz que o envio tem menos nós que o rascunho, quase
+     sempre é uma página parcial: junte todas as páginas (passo 1) e regrave.
+   - "O fluxo não foi gravado: o envio remove N nós e M arestas do ... do rascunho": o envio só tira itens (ou
+     tem menos da metade deles). Se você gravou uma página, junte todas (passo 1) e regrave. Se a remoção é a
+     intenção (apagar nó ou ramo, desfazer), diga ao usuário quais nós e arestas saem, espere a confirmação e
+     reenvie o mesmo fluxo com `confirmar_remocao: true`.
    - "O rascunho mudou desde a sua leitura (versao_do_rascunho não confere)": alguém salvou no editor;
      releia `estado_da_publicacao` e o fluxo inteiro, e refaça.
    - "A versão no ar deste agente não congela o fluxo": gravar mudaria as ligações na hora. O caminho é
@@ -59,8 +65,10 @@ usuário.
 
 ## Desfazer
 
-Antes de publicar, regrave o fluxo inteiro do passo 1 com `atualizar_fluxo_do_agente`. Depois de publicar, só
-republicando uma versão anterior pelo editor.
+Antes de publicar, regrave o fluxo inteiro do passo 1 com `atualizar_fluxo_do_agente`. Se a edição acrescentou
+nós ou arestas, desfazer os remove e a gravação é recusada ("o envio remove ..."): confirme com o usuário que é
+para desfazer e reenvie o fluxo do passo 1 com `confirmar_remocao: true`. Depois de publicar, só republicando uma
+versão anterior pelo editor.
 
 ## Relatório
 

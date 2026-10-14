@@ -21,7 +21,9 @@ Em TODA chamada, preencha `contexto` com o objetivo numa frase, sem dados pessoa
 2. `ler_versao_do_agente` das duas versões: compare `campos` chave a chave e os `vinculos`
    (ids de ferramentas, servidores MCP e documentos). O texto da base de conhecimento não vem; compare
    `tamanho_da_base_de_conhecimento`.
-3. Fluxo: `flow_version_id` diz qual Workflow foi congelado; `ler_fluxo` mostra o fluxo atual.
+3. Fluxo: `flow_version_id` diz qual Workflow foi congelado; `ler_fluxo` mostra o fluxo atual. Ele
+   vem paginado: para o fluxo inteiro, siga `proximo_inicio` (passando-o como `inicio`) até vir `null` e
+   junte as páginas na ordem; uma página só não permite afirmar que um nó ou aresta saiu.
 4. Efeito: `metricas_do_agente` numa janela igual antes e depois de `first_published_at` da versão nova.
 
 ## Privacidade

@@ -1,6 +1,6 @@
 {
   "name": "twolabs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "MCP da TwoLabs e skills para investigar e, com chave de escrita, editar agentes, fluxos, ferramentas, conhecimento e QA; a escrita pede chave própria e confirmação antes de publicar.",
   "author": {
     "name": "TwoLabs"

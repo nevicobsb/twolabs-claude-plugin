@@ -32,7 +32,9 @@ registro de atividade da organização.
    (repita com `inicio = transcricao.proximo_inicio` até vir `null`) e o resumo pós-chamada.
 2. `ler_rastro_de_decisao`: turnos com `decisao` (critério, evidência e resultado por aresta), 20 por
    página; siga `proximo_inicio`.
-3. `ler_agente` e `ler_fluxo` do `agent_id` da sessão: prompt, modelos e as arestas do fluxo.
+3. `ler_agente` e `ler_fluxo` do `agent_id` da sessão: prompt, modelos e as arestas do fluxo. `ler_fluxo`
+   vem paginado (nós e arestas em páginas): siga `proximo_inicio` (passando-o como `inicio`) até vir `null`
+   antes de concluir que uma aresta ou um nó não existe; a primeira página não é o fluxo inteiro.
 4. Se houve ferramenta: `listar_ferramentas` com o `agent_id` para achar o `tool_id`, depois
    `execucoes_de_ferramenta` com `tool_id`, `agent_id` e a janela da ligação.
 

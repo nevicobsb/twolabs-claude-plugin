@@ -1,6 +1,6 @@
 {
   "name": "twolabs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Investigue agentes, ligações, conhecimento e ferramentas da TwoLabs pelo MCP; as skills de escrita pedem chave própria e confirmação antes de publicar.",
   "author": { "name": "TwoLabs" },
   "homepage": "https://github.com/nevicobsb/twolabs-claude-plugin",

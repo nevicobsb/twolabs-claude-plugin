@@ -1,6 +1,6 @@
 # TwoLabs: plugin para Claude Code, Codex e Cursor
 
-Conecta o assistente de código ao MCP da TwoLabs (`https://api-twolabs.twolabs.app/mcp`) e traz dez skills. A versão atual é a 0.2.0.
+Conecta o assistente de código ao MCP da TwoLabs (`https://api-twolabs.twolabs.app/mcp`) e traz dez skills. A versão atual é a 0.3.0.
 
 Leitura (chave do modelo **Investigar com IA**): `investigar-ligacao`, `saude-do-agente`, `auditar-ferramenta`
 e `comparar-versoes-do-agente`.
@@ -79,5 +79,14 @@ Alternativa sem plugin: em `~/.cursor/mcp.json`,
 ## Problemas comuns
 
 `401`: sem chave ou com a credencial do editor (`twls_`). `403`: chave inválida, vencida, revogada, sem
-canal MCP, IP fora da lista, ou MCP desligado na organização. "Permissão ausente": falta a permissão da
-ferramenta na chave; edite a chave e abra uma sessão nova.
+canal MCP, IP fora da lista, ou MCP desligado na organização. "Esta credencial não tem a permissão ...":
+falta a permissão da ferramenta na chave; o texto diz qual, e um administrador a inclui na chave pela tela
+API Keys (no OAuth, a permissão vem dos grupos da pessoa). Abra uma sessão nova depois de editar a chave.
+
+`413`: o corpo da chamada passou do limite; mande menos dados por chamada (texto ou fluxo em partes
+menores). `429`: limite de chamadas ou de escritas por minuto; a mensagem traz em quantos segundos tentar
+de novo, então espere esse tempo em vez de repetir de imediato. "Parâmetro desconhecido": o nome do
+argumento não existe na ferramenta; a mensagem lista os aceitos (por exemplo `limite`, não `limit`), e
+valor fora do limite ou da lista de opções é recusado com o campo e o motivo. `403` com "Origem não
+permitida": a chamada veio de um navegador com um cabeçalho `Origin` que o servidor não aceita; clientes
+de linha de comando não enviam esse cabeçalho.

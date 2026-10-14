@@ -6,7 +6,6 @@ allowed-tools:
   - mcp__plugin_twolabs_twolabs__ler_agente
   - mcp__plugin_twolabs_twolabs__ler_fluxo
   - mcp__plugin_twolabs_twolabs__estado_da_publicacao
-  - mcp__plugin_twolabs_twolabs__atualizar_fluxo_do_agente
 ---
 
 # Editar fluxo
@@ -21,17 +20,31 @@ usuário.
 
 ## Passos
 
-1. Ler: `ler_fluxo` (formato `config` {nodes, edges} ou `workflow_config`) e `estado_da_publicacao`
-   (`versao_do_rascunho`, `editavel_pelo_mcp`). Guarde o fluxo lido: é o seu "desfazer".
-2. Montar o fluxo novo ALTERANDO o lido, sem reescrever do zero. `atualizar_fluxo_do_agente` substitui o
-   objeto inteiro de `config` ou de `workflow_config`: mande o campo completo, não um pedaço.
-3. Gravar: `atualizar_fluxo_do_agente` com `agent_id`, `versao_do_rascunho` e `config` e/ou
-   `workflow_config`. A resposta traz `alterados` e a nova `versao_do_rascunho`.
-4. Recusas (o cliente só vê o texto, que traz o motivo):
+1. Ler o fluxo INTEIRO. `ler_fluxo` é paginado como uma sequência plana de itens, na ordem `config.nodes`,
+   `config.edges`, `workflow_config.nodes`, `workflow_config.edges`. Chame com `inicio` 0 e siga
+   `proximo_inicio` (passando-o como `inicio`) até vir `null`; `limite` (1 a 500) só reduz a página. Junte as
+   páginas na ordem: estenda as listas `nodes` e `edges` e una os dicts de `config` e de `workflow_config`.
+   As demais chaves de cada grafo (chaves extras) formam um item virtual na posição 0 e vêm só na página 0,
+   o que desloca os outros itens em +1 e entra no total de itens da resposta. Página com `pagina_parcial: true` é um
+   pedaço: nunca grave uma página sozinha. Leia também `estado_da_publicacao` (`versao_do_rascunho`,
+   `editavel_pelo_mcp`). Guarde o fluxo juntado: é o seu "desfazer".
+2. Se alguma página trouxer um item `truncado` (sozinho passa do teto de resposta), ele não é entregue pelo
+   MCP e só se edita pela tela. Diga ao usuário qual é (tipo e id cortado) e leia o resto; a gravação será
+   recusada se o envio omitir ou alterar esse item (passo 4).
+3. Montar o fluxo novo ALTERANDO o juntado, sem reescrever do zero. `atualizar_fluxo_do_agente` substitui o
+   objeto inteiro de `config` ou de `workflow_config`: mande o objeto completo (todas as páginas juntadas,
+   chaves extras incluídas). Nó, aresta ou chave extra que faltar no envio é APAGADO do rascunho.
+4. Gravar: `atualizar_fluxo_do_agente` com `agent_id`, `versao_do_rascunho` e `config` e/ou
+   `workflow_config`. Ela está fora de allowed-tools (apaga o que falta no envio): o Claude Code pede a
+   permissão. A resposta traz `alterados`, a nova `versao_do_rascunho` e um `aviso`; se o aviso disser que
+   nós, arestas ou chaves extras saíram, confira com o usuário se era a intenção. Se não era, o envio foi
+   parcial: regrave o fluxo do passo 1. Recusas (o cliente só vê o texto, que traz o motivo):
+   - "O fluxo não foi gravado: o rascunho tem itens grandes demais para ler_fluxo entregar...": o envio omite
+     ou altera um item que o MCP não entrega. Não tente contornar: esse item só se edita pela tela da TwoLabs.
    - "O fluxo não foi gravado: ...": defeito estrutural (nó sem saída, aresta para nó inexistente...).
      Corrija o que o texto aponta e regrave.
    - "O rascunho mudou desde a sua leitura (versao_do_rascunho não confere)": alguém salvou no editor;
-     releia `estado_da_publicacao` e refaça.
+     releia `estado_da_publicacao` e o fluxo inteiro, e refaça.
    - "A versão no ar deste agente não congela o fluxo": gravar mudaria as ligações na hora. O caminho é
      republicar o agente (`publicar_agente`) para congelar o fluxo, e isso é uma publicação comum, só com o
      sim explícito do usuário (passo 6), nunca um detalhe.
@@ -46,7 +59,7 @@ usuário.
 
 ## Desfazer
 
-Antes de publicar, regrave o fluxo do passo 1 com `atualizar_fluxo_do_agente`. Depois de publicar, só
+Antes de publicar, regrave o fluxo inteiro do passo 1 com `atualizar_fluxo_do_agente`. Depois de publicar, só
 republicando uma versão anterior pelo editor.
 
 ## Relatório

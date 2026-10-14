@@ -7,7 +7,6 @@ allowed-tools:
   - mcp__plugin_twolabs_twolabs__ler_ferramenta
   - mcp__plugin_twolabs_twolabs__estado_da_publicacao
   - mcp__plugin_twolabs_twolabs__criar_ferramenta
-  - mcp__plugin_twolabs_twolabs__definir_ferramentas_do_agente
 ---
 
 # Manter ferramenta HTTP
@@ -39,8 +38,8 @@ não colocar.
 4. Vincular ao rascunho do agente: leia `versao_do_rascunho` em `estado_da_publicacao` e os vínculos atuais
    com `listar_ferramentas` informando `agent_id` (siga `proximo_inicio` até acabar). Chame
    `definir_ferramentas_do_agente` com `agent_id`, `versao_do_rascunho` e `tool_ids`. Ela SUBSTITUI a lista
-   inteira: `tool_ids` deve conter as ferramentas atuais MAIS a nova; deixar de fora uma já vinculada a
-   remove.
+   inteira: `tool_ids` (até 100) deve conter as ferramentas atuais MAIS a nova; deixar de fora uma já
+   vinculada a remove. Ela está fora de allowed-tools por isso: o Claude Code pede a permissão.
 5. Publicar: `publicar_agente` não está em allowed-tools (o Claude Code pede a permissão). Antes, mostre o
    que muda e pergunte "Publico agora?"; espere um sim explícito do usuário. Nunca publique por conta
    própria.

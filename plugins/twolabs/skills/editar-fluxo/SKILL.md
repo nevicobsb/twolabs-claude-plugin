@@ -38,16 +38,17 @@ usuário.
 4. Gravar: `atualizar_fluxo_do_agente` com `agent_id`, `versao_do_rascunho` e `config` e/ou
    `workflow_config`. Ela está fora de allowed-tools (apaga o que falta no envio): o Claude Code pede a
    permissão. A resposta traz `alterados`, a nova `versao_do_rascunho` e um `aviso`; se o aviso disser que
-   nós, arestas ou chaves extras saíram, confira com o usuário se era a intenção. Se não era, o envio foi
-   parcial: regrave o fluxo do passo 1. Recusas (o cliente só vê o texto, que traz o motivo):
+   chaves extras saíram (ou nós e arestas, numa gravação com `confirmar_remocao`), confira com o usuário se
+   era a intenção. Se não era, o envio foi parcial: regrave o fluxo do passo 1. Recusas (o cliente só vê o
+   texto, que traz o motivo):
    - "O fluxo não foi gravado: o rascunho tem itens grandes demais para ler_fluxo entregar...": o envio omite
      ou altera um item que o MCP não entrega. Não tente contornar: esse item só se edita pela tela da TwoLabs.
    - "O fluxo não foi gravado: ...": defeito estrutural (nó sem saída, aresta para nó inexistente...).
      Corrija o que o texto aponta e regrave. Se o texto diz que o envio tem menos nós que o rascunho, quase
      sempre é uma página parcial: junte todas as páginas (passo 1) e regrave.
-   - "O fluxo não foi gravado: o envio remove N nós e M arestas do ... do rascunho": o envio só tira itens (ou
-     tem menos da metade deles). Se você gravou uma página, junte todas (passo 1) e regrave. Se a remoção é a
-     intenção (apagar nó ou ramo, desfazer), diga ao usuário quais nós e arestas saem, espere a confirmação e
+   - "O fluxo não foi gravado: o envio remove N nós e M arestas do ... do rascunho": o envio tem menos nós ou
+     arestas que o rascunho, e isso sempre pede confirmação, mesmo com edição junto. Se você gravou uma
+     página, junte todas (passo 1) e regrave. Se a remoção é a intenção (apagar nó ou ramo, desfazer), diga ao usuário quais nós e arestas saem, espere a confirmação e
      reenvie o mesmo fluxo com `confirmar_remocao: true`.
    - "O rascunho mudou desde a sua leitura (versao_do_rascunho não confere)": alguém salvou no editor;
      releia `estado_da_publicacao` e o fluxo inteiro, e refaça.
@@ -66,9 +67,9 @@ usuário.
 ## Desfazer
 
 Antes de publicar, regrave o fluxo inteiro do passo 1 com `atualizar_fluxo_do_agente`. Se a edição acrescentou
-nós ou arestas, desfazer os remove e a gravação é recusada ("o envio remove ..."): confirme com o usuário que é
-para desfazer e reenvie o fluxo do passo 1 com `confirmar_remocao: true`. Depois de publicar, só republicando uma
-versão anterior pelo editor.
+nós ou arestas, desfazer os remove, e toda remoção pede confirmação: confirme com o usuário que é para desfazer e
+reenvie o fluxo do passo 1 com `confirmar_remocao: true` (sem ela, a gravação volta com "o envio remove
+..."). Depois de publicar, só republicando uma versão anterior pelo editor.
 
 ## Relatório
 
